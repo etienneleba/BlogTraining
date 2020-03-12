@@ -6,7 +6,7 @@ This project is a training project to test my project organisation and to try th
 - ~~create a backlog with all the user stories~~
 - ~~create a mock-up of the website~~
 - ~~create the entity schema~~
-- create the site map of the website
+- ~~create the site map of the website~~
 - ~~install the symfony/website-skeleton in local~~
 - ~~add the origin remote to git~~
 - ~~write the Read.me~~
@@ -19,6 +19,7 @@ This project is a training project to test my project organisation and to try th
 [Backlog](https://docs.google.com/spreadsheets/d/1IqGYPxU0CKftvMIUjacMXJA0FwGxybf_QqFzJ9RCFvA/edit?usp=sharing)<br>
 [Mock-up](https://www.figma.com/proto/NPzOdMc70Jtwab6i7hAelx/mock-up?node-id=1%3A2&scaling=min-zoom)<br>
 [Entity diagram](https://drive.google.com/file/d/1QU0ZPWntNJrShk8EGn9O4zAjmyAd3X7f/view?usp=sharing)
+[Sitemap diagram](https://drive.google.com/file/d/1ddp1XgEQuWALtQ5VDZYvc9cXq-v5Rxln/view?usp=sharing)
 <br>
 
 ## Entities
