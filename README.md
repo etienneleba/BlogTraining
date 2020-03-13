@@ -10,6 +10,7 @@ This project is a training project to test my project organisation and to try th
 - ~~install the symfony/website-skeleton in local~~
 - ~~add the origin remote to git~~
 - ~~write the Read.me~~
+- define the constraints of the entities
 - develope the app by following the backlog priority with the test-first method
 - add the css by following the mock-up
 - add the end-to-end test to match with the user stories of the backlog
@@ -26,27 +27,27 @@ This project is a training project to test my project organisation and to try th
 
 **User**
 - *id*
-- Email
-- Password
-- Firstname
-- Lastname
+- Email string => email 
+- Password 
+- Firstname string < 255
+- Lastname string < 255
 <br>
 
 **Alternative**
 - *id*
-- Title
-- Description
-- Content
-- TypeId
+- Title string < 255
+- Description text < 400
+- Content text
+- TypeId 
 - ContentTypeId
 <br>
 
 **Type**
 - *id*
-- name
+- name string < 255
 <br>
 
 **ContentType**
 - *id*
-- name
+- name string < 255
 <br>
