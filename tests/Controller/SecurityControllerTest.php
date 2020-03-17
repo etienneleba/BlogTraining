@@ -46,7 +46,7 @@ class SecurityControllerTest extends WebTestCase
 
     public function testLoginWithGoodCredentials()
     {
-        $this->loadFixtureFiles([__DIR__.'/SecurityControllerTestFixtures.yaml']);
+        $this->loadFixtureFiles([__DIR__.'/UserTestFixtures.yaml']);
         $client = static::createClient();
         $crawler = $client->request('GET', '/login');
         $form = $crawler->selectButton('Sign in')->form([
