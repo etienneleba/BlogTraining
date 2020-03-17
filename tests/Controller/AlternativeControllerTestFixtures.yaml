@@ -1,0 +1,23 @@
+App\Entity\User:
+  user1:
+    email: 'john@domain.fr'
+    password: $2y$10$WQEIvTRS3KD32rofsMSQNOQwVgdAXPWlQVH2ruJdByRce3sPMWSwW
+    firstname: 'john'
+    lastname: 'doe'
+
+App\Entity\Type:
+  type1:
+    name: 'testType'
+
+App\Entity\ContentType:
+  contentType1:
+    name: 'testContentType'
+
+App\Entity\Alternative: 
+  alternatve{1..10}:
+    title: 'Title <current()>'
+    description: 'Description <current()>'
+    content: 'Content <current()>'
+    type: @type1
+    contentType: @contentType1
+    user: @user1
