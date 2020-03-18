@@ -3,4 +3,8 @@
 
 {% block body %}
 <h1>Democratic alternatives</h1>
+
+{% for alternative in alternatives %}
+            <div class="alternative">{{alternative.title}}</div>
+        {% endfor %}
 {% endblock %}

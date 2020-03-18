@@ -32,4 +32,18 @@ class AlternativeControllerTest extends WebTestCase
         $client->request('GET', '/alternatives');
         $this->assertSelectorTextContains('h1', 'Democratic alternatives');
     }
+
+    public function testAlternativesAreDisplayed()
+    {
+        $fixtures = $this->loadFixtureFiles([__DIR__.'/AlternativeControllerTestFixtures.yaml']);
+        $client = static::createClient();
+
+        $this->login($client, $fixtures['user1']);
+
+        $crawler = $client->request('GET', '/alternatives');
+
+        $this->assertSelectorTextContains('h1', 'Democratic alternatives');
+
+        $this->assertEquals(10, $crawler->filter('div.alternative')->count());
+    }
 }
