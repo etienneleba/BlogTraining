@@ -35,15 +35,31 @@ class AlternativeControllerTest extends WebTestCase
 
     public function testAlternativesAreDisplayed()
     {
-        $fixtures = $this->loadFixtureFiles([__DIR__.'/AlternativeControllerTestFixtures.yaml']);
+        $alternatives = $this->loadFixtureFiles([__DIR__.'/AlternativeTestFixtures.yaml']);
         $client = static::createClient();
 
-        $this->login($client, $fixtures['user1']);
+        $user = $this->loadFixtureFiles([__DIR__.'/UserTestFixtures.yaml']);
+
+        $this->login($client, $user['user1']);
 
         $crawler = $client->request('GET', '/alternatives');
 
         $this->assertSelectorTextContains('h1', 'Democratic alternatives');
 
         $this->assertEquals(10, $crawler->filter('div.alternative')->count());
+    }
+
+    public function testUserHeader()
+    {
+        $users = $this->loadFixtureFiles([__DIR__.'/UserTestFixtures.yaml']);
+
+        $client = static::createClient();
+        $this->login($client, $users['user1']);
+        $crawler = $client->request('GET', '/alternatives');
+
+        $this->assertSelectorExists('.header');
+        $this->assertEquals('/alternatives', $crawler->filter('a')->eq(0)->link()->getNode()->getAttribute('href'));
+        $this->assertEquals('/logout', $crawler->filter('a')->eq(1)->link()->getNode()->getAttribute('href'));
+        $this->assertEquals('/user/profile', $crawler->filter('a')->eq(2)->link()->getNode()->getAttribute('href'));
     }
 }

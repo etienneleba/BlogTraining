@@ -31,6 +31,40 @@ class BaseControllerTest extends WebTestCase
         $client = static::createClient();
         $crawler = $client->request('GET', '/home');
 
-        $this->assertEquals(2, $crawler->filter('a')->count());
+        $this->assertEquals(4, $crawler->filter('a')->count());
+    }
+
+    public function testLoginLink()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/home');
+
+        $link = $crawler->selectLink('Login')->link();
+
+        $client->click($link);
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        $this->assertSelectorTextContains('h1', 'sign in');
+    }
+
+    public function testRegisterLink()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/home');
+
+        $link = $crawler->selectLink('Register')->link();
+
+        $client->click($link);
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        $this->assertSelectorTextContains('h1', 'Register');
+    }
+
+    public function testHeader()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/home');
+
+        $this->assertSelectorExists('.header');
+        $this->assertEquals('/alternatives', $crawler->filter('a')->eq(0)->link()->getNode()->getAttribute('href'));
+        $this->assertEquals('/login', $crawler->filter('a')->eq(1)->link()->getNode()->getAttribute('href'));
     }
 }

@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+<h1>User profile</h1>
+
+<h2>My profile</h2>
+
+<div class="infos">
+
+    <div class="info">{{ app.user.email }}</div>
+    <div class="info">{{ app.user.firstname }}</div>
+    <div class="info">{{ app.user.lastname }}</div>
+</div>
+
+<h2>My alternatives</h2>
+
+<div class="alternatives">
+    {% for alternative in alternatives %}
+            <div class="alternative">{{alternative.title}}</div>
+    {% endfor %}
+   
+</div>
+
+{% endblock %}
+

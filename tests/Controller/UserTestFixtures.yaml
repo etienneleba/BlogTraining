@@ -1,3 +1,6 @@
+include:
+  - ./AlternativeTestFixtures.yaml
+
 App\Entity\User:
   user1:
     email: 'john@domain.fr'
@@ -5,3 +8,4 @@ App\Entity\User:
     firstname: 'john'
     lastname: 'doe'
     roles: ['ROLE_USER']
+    alternatives: '@alternative{1..10}'

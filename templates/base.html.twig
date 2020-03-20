@@ -6,6 +6,18 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+        <div class="header">
+            <div class="logo"><a href="{{ path('alternatives') }}">AlterDemos</a></div> 
+            {% if app.user %}
+                
+                {{ app.user.email }} => <a href="{{ path('logout') }}">Logout</a> |  <a href="{{ path('profile') }}">Profile</a>
+
+            {% else %}
+                <a href="{{ path('login') }}">Login</a>
+            {% endif %}
+
+        </div>
+
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>

@@ -1,10 +1,5 @@
-App\Entity\User:
-  user1:
-    email: 'john@domain.fr'
-    password: \$2y\$10\$ahW4qZ08tuDjbNErWO.qbu8Q8/Usls.tesPF9KafWAXSnzswpquRC
-    firstname: 'john'
-    lastname: 'doe'
-    roles: ['ROLE_USER']
+include:
+  - ./UserTestFixtures.yaml
 
 App\Entity\Type:
   type1:
@@ -15,7 +10,7 @@ App\Entity\ContentType:
     name: 'testContentType'
 
 App\Entity\Alternative: 
-  alternatve{1..10}:
+  alternative{1..10}:
     title: 'Title <current()>'
     description: 'Description <current()>'
     content: 'Content <current()>'
