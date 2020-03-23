@@ -18,6 +18,7 @@ This project is a training project to test my project organisation and to try th
 <br>
 
 [Backlog](https://docs.google.com/spreadsheets/d/1IqGYPxU0CKftvMIUjacMXJA0FwGxybf_QqFzJ9RCFvA/edit?usp=sharing)<br>
+[Trello](https://trello.com/b/d4XljCXI/blogtraining)<br>
 [Mock-up](https://www.figma.com/proto/NPzOdMc70Jtwab6i7hAelx/mock-up?node-id=1%3A2&scaling=min-zoom)<br>
 [Entity diagram](https://drive.google.com/file/d/1QU0ZPWntNJrShk8EGn9O4zAjmyAd3X7f/view?usp=sharing)<br>
 [Sitemap diagram](https://drive.google.com/file/d/1ddp1XgEQuWALtQ5VDZYvc9cXq-v5Rxln/view?usp=sharing)
