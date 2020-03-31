@@ -1,0 +1,37 @@
+App\Entity\User:
+  user:
+    email: "user@domain.fr"
+    password: \$2y\$10\$ahW4qZ08tuDjbNErWO.qbu8Q8/Usls.tesPF9KafWAXSnzswpquRC
+    firstname: "user"
+    lastname: "user"
+    roles: ["ROLE_USER"]
+  admin:
+    email: "admin@domain.fr"
+    password: \$2y\$10\$ahW4qZ08tuDjbNErWO.qbu8Q8/Usls.tesPF9KafWAXSnzswpquRC
+    firstname: "admin"
+    lastname: "admin"
+    roles: ["ROLE_USER", "ROLE_ADMIN"]
+  john:
+    email: "john@domain.fr"
+    password: \$2y\$10\$ahW4qZ08tuDjbNErWO.qbu8Q8/Usls.tesPF9KafWAXSnzswpquRC
+    firstname: "john"
+    lastname: "doe"
+    roles: ["ROLE_USER"]
+
+App\Entity\Type:
+  city:
+    name: "City"
+  territory:
+    name: "Territory"
+  national:
+    name: "National"
+  International:
+    name: "International"
+
+App\Entity\ContentType:
+  constitution:
+    name: "Constitution"
+  tool:
+    name: "Tool"
+  other:
+    name: "Other"
