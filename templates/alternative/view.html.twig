@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	<div class="row">
+		<h1 class="h2 mb-4 font-weight-bold col-sm-12 col-md-auto">
+			{{ alternative.title }}
+		</h1>
+		<div class="col-sm-12 col-md-auto">
+			<div class="badge badge-info">{{ alternative.type }}</div>
+			<div class="badge badge-secondary">{{ alternative.contentType }}</div>
+		</div>
+		<div class="col-sm-12  border-bottom pb-4 mb-3 mt-3">{{ alternative.description }}</div>
+		<div class="col-sm-12">{{ alternative.content | markdown}}
+		</div>
+		<div class="text-right col-sm-12">
+			<a href="{{ path('view_user', {id: alternative.user.id})}}">
+				<strong>
+					{{ alternative.user.firstname | capitalize }}
+					{{ alternative.user.lastname | capitalize  }}
+				</strong>
+			</a>
+		</div>
+	</div>
+
+
+{% endblock %}

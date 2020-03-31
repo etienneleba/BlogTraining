@@ -1,9 +1,14 @@
 {% extends 'base.html.twig' %}
-
-
 {% block body %}
-<h1>Imagine your own Democracy</h1>
-<a href="{{ path('register')}}">Register</a>
-<a href="{{ path('login')}}">Login</a>
+	<div class="row h-50 justify-content-sm-center align-items-center mt-5">
+		<h1 class="col-sm-12 text-center mt-5 mb-5">Imagine your own Democracy</h1>
+		<div class="col-sm-12 text-center mt-5">
+			<a class="btn btn-lg btn-primary" href="{{ path('login') }}">Login</a>
+		</div>
+		<div class="col-sm-12 text-center mt-2">
+			<a href="{{ path('register') }}">Register</a>
+		</div>
+	</div>
+
 
 {% endblock %}

@@ -1,0 +1,42 @@
+<div class="alternatives">
+  {% for alternative in alternatives %}
+  <div class="alternative">
+    <div class="row">
+      <div class="title col-sm-12 col-md-auto">
+        {{ alternative.title | capitalize }}
+      </div>
+      <div class="tags col-sm-12 col-md-auto">
+        <div class="badge badge-info">{{ alternative.type }}</div>
+        <div class="badge badge-secondary">
+          {{ alternative.contentType }}
+        </div>
+      </div>
+      <div class="description col-sm-12">
+        {{ alternative.description | capitalize }}
+      </div>
+
+      <div class="btns col-sm-12">
+        <a
+          class="btn btn-outline-primary"
+          href="{{ path('view_alternative', { id: alternative.id }) }}"
+          >View</a
+        >
+        {% if profile %}
+
+        <a
+          class="btn btn-outline-secondary"
+          href="{{ path('edit_alternative', { id: alternative.id }) }}"
+          >Edit</a
+        >
+        <a
+          class="btn btn-outline-danger"
+          href="{{ path('delete_alternative', { id: alternative.id }) }}"
+          >Delete</a
+        >
+
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+{% block title %}Profile
+{% endblock %}
+{% block
+body %}
+	<h1 class="h2 mb-2 font-weight-300">
+		{% if profile %}
+			My profile
+		{% else %}
+			Profile
+		{% endif %}
+	</h1>
+	<div class="infos">
+		<div class="info">
+			<strong>Email :
+			</strong>
+			{{ user.email }}</div>
+		<div class="info">
+			<strong>Firstname :
+			</strong>
+			{{ user.firstname | capitalize }}</div>
+		<div class="info">
+			<strong>Lastname :
+			</strong>
+			{{ user.lastname | capitalize }}</div>
+	</div>
+
+	<h2 class="h3 mb-3 font-weight-normal">
+		{% if profile %}
+			My alternatives
+		{% else %}
+			Alternatives
+		{% endif %}
+	</h2>
+
+	{% if profile %}
+		<a class="btn btn-success btn-md" href="{{ path('new_alternative') }}">New</a>
+	{% endif %}
+
+	{{
+  include("includes/alternativesTiles.html.twig", {
+    alternatives: user.alternatives,
+    profile: profile
+  })
+}}
+
+{% endblock %}

@@ -1,24 +1,57 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}AlterDemos{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        <div class="header">
-            <div class="logo"><a href="{{ path('alternatives') }}">AlterDemos</a></div> 
-            {% if app.user %}
-                
-                {{ app.user.email }} => <a href="{{ path('logout') }}">Logout</a> |  <a href="{{ path('profile') }}">Profile</a>
+	<head>
+		<meta charset="UTF-8"/>
 
-            {% else %}
-                <a href="{{ path('login') }}">Login</a>
-            {% endif %}
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        </div>
+		<title>
+			{% block title %}AlterDemos
+			{% endblock %}
+		</title>
+		{% block stylesheets %}
+			{{ encore_entry_link_tags("app") }}
+		{% endblock %}
+	</head>
+	<body>
 
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+			<a class="navbar-brand" href="{{ path('home') }}">AlterDemos</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+				<div class="navbar-nav">
+
+					{% if app.user %}
+						<a class="nav-item nav-link {% if app.request.get('_route') == 'alternatives' %}active{% endif %}" href="{{ path('alternatives') }}">Alternatives</a>
+						<a class="nav-item nav-link {% if app.request.get('_route') == 'profile' %}active{% endif %}" href="{{ path('profile') }}">Profile</a>
+						<a class="nav-item nav-link" href="{{ path('logout') }}">Logout</a>
+					{% else %}
+						<a class="nav-item nav-link {% if app.request.get('_route') == 'login' %}active{% endif %}" href="{{ path('login') }}">Login</a>
+						<a class="nav-item nav-link {% if app.request.get('_route') == 'register' %}active{% endif %}" href="{{ path('register') }}">Register</a>
+					{% endif %}
+				</div>
+			</div>
+		</nav>
+
+		<div class="container">
+			{% for type, messages in app.session.flashBag.all %}
+				{% for message in messages %}
+					{%if type == 'error'%}
+						{% set type = 'danger' %}
+						{%endif%}
+						<div class="alert alert-{{ type }}" role="alert">
+							{{ message|raw }}
+						</div>
+					{% endfor %}
+				{% endfor %}
+				{% block body %}{% endblock %}
+			</div>
+
+			{% block javascripts %}
+				{{ encore_entry_script_tags('app') }}
+			{% endblock %}
+		</body>
+	</body>
 </html>

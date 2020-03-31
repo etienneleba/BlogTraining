@@ -1,10 +1,13 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %} {% block body %}
+<h1 class="mb-5 mt-5">Democratic alternatives</h1>
 
+{{ form(form) }}
 
-{% block body %}
-<h1>Democratic alternatives</h1>
+{{
+  include("includes/alternativesTiles.html.twig", {
+    alternatives: alternatives,
+    profile: false
+  })
+}}
 
-{% for alternative in alternatives %}
-            <div class="alternative">{{alternative.title}}</div>
-        {% endfor %}
 {% endblock %}
