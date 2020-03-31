@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -19,6 +20,10 @@ class Alternative
 
     /**
      * @Assert\NotBlank()
+     * @Assert\Length(
+     *      max = 100,
+     *      maxMessage = "the title cannot be longer than {{ limit }} characters"
+     * )
      * @ORM\Column(type="string", length=255)
      */
     private $title;
@@ -27,7 +32,7 @@ class Alternative
      * @Assert\NotBlank()
      * @Assert\Length(
      *      max = 400,
-     *      maxMessage = "Your first name cannot be longer than {{ limit }} characters"
+     *      maxMessage = "the description cannot be longer than {{ limit }} characters"
      * )
      * @ORM\Column(type="text")
      */
@@ -56,6 +61,21 @@ class Alternative
      * @ORM\JoinColumn(nullable=false)
      */
     private $contentType;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created_at;
+
+    public function __construct()
+    {
+        $this->created_at = new DateTime();
+    }
+
+    public function __toString()
+    {
+        return $this->title;
+    }
 
     public function getId(): ?int
     {
@@ -130,6 +150,18 @@ class Alternative
     public function setContentType(?ContentType $contentType): self
     {
         $this->contentType = $contentType;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $created_at): self
+    {
+        $this->created_at = $created_at;
 
         return $this;
     }

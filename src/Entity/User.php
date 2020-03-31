@@ -56,12 +56,18 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Alternative", mappedBy="user")
+     * @ORM\OrderBy({"created_at" = "DESC"})
      */
     private $alternatives;
 
     public function __construct()
     {
         $this->alternatives = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->email;
     }
 
     public function getId(): ?int

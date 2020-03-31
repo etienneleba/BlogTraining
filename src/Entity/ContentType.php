@@ -35,6 +35,11 @@ class ContentType
         $this->alternatives = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->name;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -53,7 +58,7 @@ class ContentType
     }
 
     /**
-     * @return Collection|Alternative[]
+     * @return Alternative[]|Collection
      */
     public function getAlternatives(): Collection
     {
