@@ -3,7 +3,6 @@
 namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @internal
@@ -11,19 +10,11 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class BaseControllerTest extends WebTestCase
 {
-    public function test200StatusHome()
+    public function testHome()
     {
         $client = static::createClient();
         $client->request('GET', '/home');
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-    }
-
-    public function testHomeTitle()
-    {
-        $client = static::createClient();
-        $client->request('GET', '/home');
-
-        $this->assertSelectorTextContains('h1', 'Imagine your own Democracy');
+        $this->assertResponseIsSuccessful();
     }
 
     public function testNumberOfLink()
@@ -31,7 +22,7 @@ class BaseControllerTest extends WebTestCase
         $client = static::createClient();
         $crawler = $client->request('GET', '/home');
 
-        $this->assertEquals(4, $crawler->filter('a')->count());
+        $this->assertEquals(5, $crawler->filter('a')->count());
     }
 
     public function testLoginLink()
@@ -41,9 +32,9 @@ class BaseControllerTest extends WebTestCase
 
         $link = $crawler->selectLink('Login')->link();
 
-        $client->click($link);
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-        $this->assertSelectorTextContains('h1', 'sign in');
+        $crawler = $client->click($link);
+
+        $this->assertRouteSame('login');
     }
 
     public function testRegisterLink()
@@ -54,17 +45,7 @@ class BaseControllerTest extends WebTestCase
         $link = $crawler->selectLink('Register')->link();
 
         $client->click($link);
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-        $this->assertSelectorTextContains('h1', 'Register');
-    }
 
-    public function testHeader()
-    {
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/home');
-
-        $this->assertSelectorExists('.header');
-        $this->assertEquals('/alternatives', $crawler->filter('a')->eq(0)->link()->getNode()->getAttribute('href'));
-        $this->assertEquals('/login', $crawler->filter('a')->eq(1)->link()->getNode()->getAttribute('href'));
+        $this->assertRouteSame('register');
     }
 }

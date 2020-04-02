@@ -1,13 +1,7 @@
 include:
   - ./UserTestFixtures.yaml
-
-App\Entity\Type:
-  type1:
-    name: "testType"
-
-App\Entity\ContentType:
-  contentType1:
-    name: "testContentType"
+  - ./TypeTestFixtures.yaml
+  - ./ContentTypeTestFixtures.yaml
 
 App\Entity\Alternative:
   alternative{1..10}:

@@ -5,7 +5,6 @@ namespace App\Tests;
 use App\Tests\Traits\NeedLoginTrait;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @internal
@@ -16,39 +15,59 @@ class SecurityControllerTest extends WebTestCase
     use FixturesTrait;
     use NeedLoginTrait;
 
-    public function test200StatusLogin()
+    public function testUnauthenticatedUserLogin()
     {
         $client = static::createClient();
         $client->request('GET', '/login');
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        $this->assertResponseIsSuccessful();
     }
 
-    public function testH1Login()
+    public function testAuthenticatedUserRegister()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/login');
-
-        $this->assertSelectorTextContains('h1', 'sign in');
+        $this->login($client);
+        $client->request('GET', '/login');
+        $this->assertResponseRedirects('/alternatives');
     }
 
-    public function testLoginWithBadCredentials()
+    public function testLoginWithUnknowEmail()
     {
+        $this->loadFixtureFiles([dirname(__DIR__).'/GlobalFixtures/UserTestFixtures.yaml']);
         $client = static::createClient();
         $crawler = $client->request('GET', '/login');
         $form = $crawler->selectButton('Sign in')->form([
             'email' => 'john@doe.fr',
             'password' => 'fakepassword',
         ]);
+
         $client->submit($form);
-        $this->assertResponseRedirects('/login');
-        $client->followRedirect();
-        $this->assertSelectorExists('.alert.alert-danger');
+
+        $crawler = $client->followRedirect();
+
+        $this->assertContains('Email could not be found.', $crawler->html());
+    }
+
+    public function testLoginWithBadCredentials()
+    {
+        $this->loadFixtureFiles([dirname(__DIR__).'/GlobalFixtures/UserTestFixtures.yaml']);
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/login');
+        $form = $crawler->selectButton('Sign in')->form([
+            'email' => 'john@domain.fr',
+            'password' => 'fakepassword',
+        ]);
+
+        $client->submit($form);
+
+        $crawler = $client->followRedirect();
+
+        $this->assertContains('Invalid credentials', $crawler->html());
     }
 
     public function testLoginWithGoodCredentials()
     {
-        $this->loadFixtureFiles([__DIR__.'/UserTestFixtures.yaml']);
+        $this->loadFixtureFiles([dirname(__DIR__).'/GlobalFixtures/UserTestFixtures.yaml']);
         $client = static::createClient();
         $crawler = $client->request('GET', '/login');
         $form = $crawler->selectButton('Sign in')->form([
@@ -62,9 +81,8 @@ class SecurityControllerTest extends WebTestCase
 
     public function testRedirectionWhenUserAlreadyLogin()
     {
-        $users = $this->loadFixtureFiles([__DIR__.'/UserTestFixtures.yaml']);
         $client = static::createClient();
-        $this->login($client, $users['user1']);
+        $this->login($client);
         $client->request('GET', '/login');
 
         $this->assertResponseRedirects('/alternatives');

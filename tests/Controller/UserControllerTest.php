@@ -25,44 +25,29 @@ class UserControllerTest extends WebTestCase
 
     public function setUp()
     {
-        $fixture = $this->loadFixtureFiles([__DIR__.'/UserTestFixtures.yaml']);
-
         $this->client = static::createClient();
-        $this->user = $fixture['user1'];
-        $this->login($this->client, $this->user);
+        $this->user = $this->login($this->client);
     }
 
-    public function test200StatusUser()
+    public function testProfile()
     {
         $this->client->request('GET', '/user/profile');
 
         $this->assertResponseIsSuccessful();
     }
 
-    public function testh1User()
-    {
-        $this->client->request('GET', '/user/profile');
-
-        $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'User profile');
-    }
-
-    public function testUserProfile()
+    public function testUserProfileData()
     {
         $crawler = $this->client->request('GET', '/user/profile');
 
-        $this->assertSelectorTextContains('h2', 'My profile');
-
-        $this->assertEquals($this->user->getEmail(), $crawler->filter('.info')->getNode(0)->nodeValue);
-        $this->assertEquals($this->user->getFirstname(), $crawler->filter('.info')->getNode(1)->nodeValue);
-        $this->assertEquals($this->user->getLastname(), $crawler->filter('.info')->getNode(2)->nodeValue);
+        $this->assertContains($this->user->getEmail(), $crawler->filter('.info')->getNode(0)->nodeValue);
+        $this->assertContains(ucfirst($this->user->getFirstname()), $crawler->filter('.info')->getNode(1)->nodeValue);
+        $this->assertContains(ucfirst($this->user->getLastname()), $crawler->filter('.info')->getNode(2)->nodeValue);
     }
 
     public function testUserAlternatives()
     {
         $crawler = $this->client->request('GET', '/user/profile');
-
-        $this->assertEquals('My alternatives', $crawler->filter('h2')->getNode(1)->nodeValue);
 
         $this->assertEquals(count($this->user->getAlternatives()->toArray()), $crawler->filter('div.alternative')->count());
     }

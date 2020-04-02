@@ -12,8 +12,10 @@ trait NeedLoginTrait
     /**
      * Connecter un utilisateur sur le client en se basant sur le système de Cookie.
      */
-    public function login(KernelBrowser $client, User $user)
+    public function login(KernelBrowser $client, string $userFixture = '/GlobalFixtures/UserTestFixtures.yaml'): User
     {
+        $user = $this->loadFixtureFiles([dirname(__DIR__).$userFixture])['user'];
+
         $session = $client->getContainer()->get('session');
         $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
         $session->set('_security_main', serialize($token));
@@ -21,5 +23,7 @@ trait NeedLoginTrait
 
         $cookie = new Cookie($session->getName(), $session->getId());
         $client->getCookieJar()->set($cookie);
+
+        return $user;
     }
 }

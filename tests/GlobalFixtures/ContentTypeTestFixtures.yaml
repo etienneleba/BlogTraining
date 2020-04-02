@@ -1,0 +1,3 @@
+App\Entity\ContentType:
+  contentType1:
+    name: "testContentType"

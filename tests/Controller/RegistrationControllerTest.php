@@ -2,9 +2,9 @@
 
 namespace App\Tests;
 
+use App\Tests\Traits\NeedLoginTrait;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @internal
@@ -13,18 +13,27 @@ use Symfony\Component\HttpFoundation\Response;
 class RegistrationControllerTest extends WebTestCase
 {
     use FixturesTrait;
+    use NeedLoginTrait;
 
-    public function test200StatusRegister()
+    public function testUnauthenticatedUserRegister()
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/register');
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        $this->assertResponseIsSuccessful();
+    }
+
+    public function testAuthenticatedUserRegister()
+    {
+        $client = static::createClient();
+        $this->login($client);
+        $client->request('GET', '/register');
+        $this->assertResponseRedirects('/alternatives');
     }
 
     public function testRegistrationWithUsedEmail()
     {
-        $this->loadFixtureFiles([__DIR__.'/UserTestFixtures.yaml']);
+        $this->loadFixtureFiles([dirname(__DIR__).'/GlobalFixtures/UserTestFixtures.yaml']);
         $client = static::createClient();
         $crawler = $client->request('GET', '/register');
         $form = $crawler->selectButton('Register')->form([
@@ -33,9 +42,9 @@ class RegistrationControllerTest extends WebTestCase
             'registration_form[firstname]' => 'john',
             'registration_form[lastname]' => 'doe',
         ]);
-        $client->submit($form);
+        $crawler = $client->submit($form);
 
-        $this->assertSelectorTextContains('li', 'There is already an account with this email');
+        $this->assertContains('There is already an account with this email', $crawler->html());
     }
 
     public function testValidRegistration()

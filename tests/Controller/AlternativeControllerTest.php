@@ -15,7 +15,7 @@ class AlternativeControllerTest extends WebTestCase
     use FixturesTrait;
     use NeedLoginTrait;
 
-    public function testUserGrantedRoleUser()
+    public function testUnauthenticatedUserAlternatives()
     {
         $client = static::createClient();
         $client->request('GET', '/alternatives');
@@ -23,43 +23,25 @@ class AlternativeControllerTest extends WebTestCase
         $this->assertResponseRedirects('/login');
     }
 
-    public function testh1Alternatives()
+    public function testAuthenticatedUserAlternatives()
     {
-        $users = $this->loadFixtureFiles([__DIR__.'/UserTestFixtures.yaml']);
-
         $client = static::createClient();
-        $this->login($client, $users['user1']);
+
+        $this->login($client);
+
         $client->request('GET', '/alternatives');
-        $this->assertSelectorTextContains('h1', 'Democratic alternatives');
+
+        $this->assertResponseIsSuccessful();
     }
 
     public function testAlternativesAreDisplayed()
     {
-        $alternatives = $this->loadFixtureFiles([__DIR__.'/AlternativeTestFixtures.yaml']);
         $client = static::createClient();
 
-        $user = $this->loadFixtureFiles([__DIR__.'/UserTestFixtures.yaml']);
-
-        $this->login($client, $user['user1']);
+        $this->login($client);
 
         $crawler = $client->request('GET', '/alternatives');
-
-        $this->assertSelectorTextContains('h1', 'Democratic alternatives');
 
         $this->assertEquals(10, $crawler->filter('div.alternative')->count());
-    }
-
-    public function testUserHeader()
-    {
-        $users = $this->loadFixtureFiles([__DIR__.'/UserTestFixtures.yaml']);
-
-        $client = static::createClient();
-        $this->login($client, $users['user1']);
-        $crawler = $client->request('GET', '/alternatives');
-
-        $this->assertSelectorExists('.header');
-        $this->assertEquals('/alternatives', $crawler->filter('a')->eq(0)->link()->getNode()->getAttribute('href'));
-        $this->assertEquals('/logout', $crawler->filter('a')->eq(1)->link()->getNode()->getAttribute('href'));
-        $this->assertEquals('/user/profile', $crawler->filter('a')->eq(2)->link()->getNode()->getAttribute('href'));
     }
 }
