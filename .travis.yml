@@ -36,6 +36,8 @@ install:
   - php -r "echo ini_get('memory_limit').PHP_EOL;"
   # install or update
   - composer $ACTION
+  - ./bin/console doctrine:create:database --env=test
+  - ./bin/console doctrine:schema:update -f --env=test
   - ./bin/phpunit install
 
 script:
