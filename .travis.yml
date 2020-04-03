@@ -38,6 +38,7 @@ install:
   - composer $ACTION
   - php ./bin/console doctrine:database:create --env=test
   - php ./bin/console doctrine:schema:update -f --env=test
+  - yarn install 
   - yarn build
   - ./bin/phpunit install
 
