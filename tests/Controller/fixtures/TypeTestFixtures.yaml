@@ -1,0 +1,5 @@
+App\Entity\Type:
+  type1:
+    name: "testType1"
+  type2:
+    name: "testType2"

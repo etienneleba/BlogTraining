@@ -25,8 +25,9 @@ class SecurityControllerTest extends WebTestCase
 
     public function testAuthenticatedUserRegister()
     {
+        $fixture = $this->loadFixtureFiles([dirname(__DIR__).'/GlobalFixtures/UserTestFixtures.yaml']);
         $client = static::createClient();
-        $this->login($client);
+        $this->login($client, $fixture['user']);
         $client->request('GET', '/login');
         $this->assertResponseRedirects('/alternatives');
     }
@@ -81,8 +82,9 @@ class SecurityControllerTest extends WebTestCase
 
     public function testRedirectionWhenUserAlreadyLogin()
     {
+        $fixture = $this->loadFixtureFiles([dirname(__DIR__).'/GlobalFixtures/UserTestFixtures.yaml']);
         $client = static::createClient();
-        $this->login($client);
+        $this->login($client, $fixture['user']);
         $client->request('GET', '/login');
 
         $this->assertResponseRedirects('/alternatives');

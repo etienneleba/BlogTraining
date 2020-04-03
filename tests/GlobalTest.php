@@ -17,8 +17,11 @@ class GlobalTest extends WebTestCase
 
     public function testAuthenticatedUserHeader()
     {
+        $fixture = $this->loadFixtureFiles([__DIR__.'/GlobalFixtures/UserTestFixtures.yaml']);
+
         $client = static::createClient();
-        $this->login($client);
+
+        $this->login($client, $fixture['user']);
         $crawler = $client->request('GET', '/alternatives');
 
         $this->assertSelectorExists('.navbar');

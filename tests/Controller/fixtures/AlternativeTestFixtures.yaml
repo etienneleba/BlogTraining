@@ -1,0 +1,34 @@
+include:
+  - ./UserTestFixtures.yaml
+  - ./TypeTestFixtures.yaml
+  - ./ContentTypeTestFixtures.yaml
+
+App\Entity\Alternative:
+  alternative11{1..5}:
+    title: "Title <current()>"
+    description: "Description <current()>"
+    content: "Content <current()>"
+    type: "@type1"
+    contentType: "@contentType1"
+    user: "@user"
+  alternative12{1..5}:
+    title: "Title <current()>"
+    description: "Description <current()>"
+    content: "Content <current()>"
+    type: "@type1"
+    contentType: "@contentType2"
+    user: "@user"
+  alternative21{1..5}:
+    title: "Title <current()>"
+    description: "Description <current()>"
+    content: "Content <current()>"
+    type: "@type2"
+    contentType: "@contentType1"
+    user: "@user"
+  alternative22{1..5}:
+    title: "Title <current()>"
+    description: "Description <current()>"
+    content: "Content <current()>"
+    type: "@type2"
+    contentType: "@contentType2"
+    user: "@user"

@@ -25,8 +25,10 @@ class UserControllerTest extends WebTestCase
 
     public function setUp()
     {
+        $fixture = $this->loadFixtureFiles([dirname(__DIR__).'/GlobalFixtures/UserTestFixtures.yaml']);
         $this->client = static::createClient();
-        $this->user = $this->login($this->client);
+        $this->user = $fixture['user'];
+        $this->login($this->client, $this->user);
     }
 
     public function testProfile()

@@ -25,8 +25,9 @@ class RegistrationControllerTest extends WebTestCase
 
     public function testAuthenticatedUserRegister()
     {
+        $fixture = $this->loadFixtureFiles([dirname(__DIR__).'/GlobalFixtures/UserTestFixtures.yaml']);
         $client = static::createClient();
-        $this->login($client);
+        $this->login($client, $fixture['user']);
         $client->request('GET', '/register');
         $this->assertResponseRedirects('/alternatives');
     }

@@ -11,7 +11,6 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  * @method null|Alternative findOneBy(array $criteria, array $orderBy = null)
  * @method Alternative[]    findAll()
  * @method Alternative[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- * @method Alternative[]    findByTypeAndContentType(int $typeId = null, int $contentTypeId = null)
  */
 class AlternativeRepository extends ServiceEntityRepository
 {
@@ -23,26 +22,6 @@ class AlternativeRepository extends ServiceEntityRepository
     public function findAll()
     {
         return  $this->findBy([], ['created_at' => 'DESC']);
-    }
-
-    public function findByTypeAndContentType(int $typeId = null, int $contentTypeId = null)
-    {
-        $query = $this->createQueryBuilder('a');
-        if ($typeId) {
-            $query->andWhere('a.type = :typeId')
-                ->setParameter('typeId', $typeId)
-            ;
-        }
-        if ($contentTypeId) {
-            $query->andWhere('a.contentType = :contentTypeId')
-                ->setParameter('contentTypeId', $contentTypeId)
-            ;
-        }
-
-        return $query->orderBy('a.created_at', 'DESC')
-            ->getQuery()
-            ->getResult()
-        ;
     }
 
     // /**

@@ -25,14 +25,23 @@ class AlternativeController extends AbstractController
         $typeId = null;
         $contentTypeId = null;
 
+        $repo = $this->getDoctrine()->getRepository(Alternative::class);
+
         $form->handleRequest($request);
-        $data = $form->getData();
+
+        $criteria = [];
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $typeId = $form->getData()['type'] ? $form->getData()['type']->getId() : null;
-            $contentTypeId = $form->getData()['contentType'] ? $form->getData()['contentType']->getId() : null;
+            $formData = $form->getData();
+
+            // if the field type is set, we add the value to the criteria array
+            $formData['type'] ? $criteria['type'] = $form->getData()['type']->getId() : null;
+
+            // if the field contentType is set, we add the value to the criteria array
+            $formData['contentType'] ? $criteria['contentType'] = $form->getData()['contentType']->getId() : null;
         }
 
-        $alternatives = $this->getDoctrine()->getRepository(Alternative::class)->findByTypeAndContentType($typeId, $contentTypeId);
+        $alternatives = $repo->findBy($criteria, ['created_at' => 'DESC']);
 
         return $this->render('alternative/index.html.twig', [
             'alternatives' => $alternatives,
