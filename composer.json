@@ -1,4 +1,6 @@
 {
+    "name": "BlogTraining",
+    "description": "EtienneLeba training",
     "type": "project",
     "license": "proprietary",
     "require": {
