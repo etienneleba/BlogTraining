@@ -1,4 +1,4 @@
-# BlogTraining
+# BlogTraining [![Build Status](https://travis-ci.com/etienneleba/BlogTraining.svg?branch=master)](https://travis-ci.com/etienneleba/BlogTraining)
 
 This project is a training project to test my project organisation and to try the "first test" development method. 
 
